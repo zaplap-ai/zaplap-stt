@@ -6,7 +6,7 @@ WORKDIR ./
 
 # Copy project files
 COPY ./ ./
-
+RUN apt-get update && apt-get install -y ffmpeg
 # Upgrade pip and install dependencies
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
