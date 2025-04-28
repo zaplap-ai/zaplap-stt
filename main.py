@@ -16,11 +16,12 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-model = whisper.load_model("base")
+model = whisper.load_model("tiny")
 def whisper_stt(audio_file):
     """
     Pass audio file to get text output
     """
+    logging.info("getting trascription")
     result = model.transcribe(audio_file, task="transcribe", language="en")
     return result['text']
 
@@ -34,6 +35,7 @@ async def speech_to_text(audio_file: UploadFile = File(...)):
             shutil.copyfileobj(audio_file.file, buffer)
 
         transcription = whisper_stt(temp_file_path)
+        logging.info(f"transcribed text {transcription}")
         os.remove(temp_file_path)
 
         logging.info(f"{str(datetime.now())} Transcribed audio: {transcription}")
