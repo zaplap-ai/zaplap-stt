@@ -16,7 +16,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-model = whisper.load_model("tiny")
+model = whisper.load_model("base")
 def whisper_stt(audio_file):
     """
     Pass audio file to get text output
