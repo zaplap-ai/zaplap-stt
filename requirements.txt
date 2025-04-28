@@ -3,3 +3,4 @@ torch==2.2.2+cpu
 requests==2.32.3
 fastapi==0.115.11
 openai-whisper==20240930
+uvicorn==0.34.2
