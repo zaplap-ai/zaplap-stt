@@ -1,11 +1,18 @@
-FROM python:3.12.0
+# Use official lightweight Python image
+FROM python:3.12-slim
 
+# Set working directory
 WORKDIR ./
 
-COPY ./ .
-RUN python -m venv venv
-RUN source venv/bin/activate
-RUN python -m pip install --upgrade pip
-RUN python -m pip install -r requirements.txt
+# Copy project files
+COPY ./ ./
+
+# Upgrade pip and install dependencies
+RUN pip install --upgrade pip
+RUN pip install -r requirements.txt
+
+# Expose the port Uvicorn will run on
 EXPOSE 8000
-RUN uvicorn main:app --host 0.0.0.0 --port 8000
+
+# Command to run the application
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
