@@ -16,12 +16,11 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-
+model = whisper.load_model("base")
 def whisper_stt(audio_file):
     """
     Pass audio file to get text output
     """
-    model = whisper.load_model("base")
     result = model.transcribe(audio_file, task="transcribe", language="en")
     return result['text']
 
