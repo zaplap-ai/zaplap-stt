@@ -1,7 +1,7 @@
 from fastapi import FastAPI, UploadFile, File, HTTPException, Depends, Request
 from fastapi.middleware.cors import CORSMiddleware
 import logging 
-import datetime
+from datetime import datetime
 import shutil
 import os
 import whisper
