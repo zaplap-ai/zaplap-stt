@@ -15,13 +15,12 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
 model = whisper.load_model("tiny")
 def whisper_stt(audio_file):
     """
     Pass audio file to get text output
     """
-    logging.info("getting transcribe...")
+    logging.info("render-main => whisper_stt => getting transcribe...")
     result = model.transcribe(audio_file, task="transcribe", language="en")
     return result['text']
 
@@ -29,16 +28,16 @@ def whisper_stt(audio_file):
 async def speech_to_text(audio_file: UploadFile = File(...)):
     
     temp_file_path = f"temp_{audio_file.filename}"
-    logging.info(f"{str(datetime.now())} Received audio: {audio_file.filename}") 
+    logging.info(f"{str(datetime.now())} render-main=>speech to text method => Received audio: {audio_file.filename}") 
     try:
         with open(temp_file_path, "wb") as buffer:
             shutil.copyfileobj(audio_file.file, buffer)
 
         transcription = whisper_stt(temp_file_path)
-        logging.info(f"transcribed text {transcription}")
+        logging.info(f"render-main => speech to text => transcribed text {transcription} ")
         os.remove(temp_file_path)
 
-        logging.info(f"{str(datetime.now())} Transcribed audio: {transcription}")
+        # logging.info(f"{str(datetime.now())} Transcribed audio: {transcription}")
         return {"transcription": transcription}
 
     except Exception as e:
